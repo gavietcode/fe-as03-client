@@ -1,0 +1,29 @@
+/* Main Page */
+.container {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+}
+
+.container h3,
+.container ul {
+  font-weight: bold;
+}
+
+.container ul {
+  margin-top: 1rem;
+  font-size: 18px;
+  border: 1px solid black;
+  width: 30%;
+  background-color: black;
+  color: white;
+}
+
+li {
+  list-style-type: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+li:hover {
+  color: rgb(141, 141, 141);
+}

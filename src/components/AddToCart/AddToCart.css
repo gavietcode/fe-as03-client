@@ -1,0 +1,18 @@
+.click-cart {
+  cursor: pointer;
+}
+
+.btn-click,
+span {
+  font-size: 18px;
+  margin: 10px;
+}
+
+.btn-click {
+  width: 1.5rem;
+  padding: 2px 6px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}

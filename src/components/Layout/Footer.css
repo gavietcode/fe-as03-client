@@ -1,0 +1,31 @@
+footer {
+  max-width: 88%;
+  width: 100%;
+  background-color: black;
+  color: white;
+  margin: 4rem auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+footer .ft-col {
+  margin: 4rem auto;
+}
+
+footer .ft-link {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+footer .ft-link a {
+  text-decoration: none;
+  color: white;
+}
+
+footer .ft-link a:hover,
+footer .ft-link a:active {
+  color: rgb(201, 201, 201);
+}

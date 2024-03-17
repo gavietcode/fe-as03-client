@@ -1,0 +1,142 @@
+/* Detail Page */
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail-product {
+  display: grid;
+  grid-template-columns: 10% 40% 50%;
+  width: 50%;
+}
+
+.detail-small-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.detail-small-img img {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.detail-big-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.detail-big-img img {
+  width: 100%;
+}
+
+.detail-long-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.detail-title h3 {
+  margin: 10px 0;
+}
+
+.detail-desc {
+  margin: 10px 0;
+}
+
+.detail-long-desc h3 {
+  margin: 10px 0;
+}
+
+.cart-btn {
+  width: 120px;
+  height: 48px;
+  background-color: rgb(180, 180, 180);
+}
+
+.detail-btn,
+.btn {
+  width: 120px;
+  padding: 12px;
+  background-color: rgb(24, 24, 24);
+  color: white;
+}
+
+.short-desc {
+  width: 60%;
+  margin: 40px 0;
+  margin-top: 10rem;
+}
+
+.short-desc button,
+.short-desc P {
+  margin: 12px 0;
+}
+
+/* Related Product */
+
+.related-img {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.related-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.related-wrapper img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.related-wrapper .content {
+  position: absolute;
+  inset: 0;
+  font-size: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+}
+
+/* Hover for Images */
+.related-wrapper img,
+.related-wrapper .content {
+  transition: 200ms ease-in-out;
+}
+
+.related-wrapper .content.fade {
+  opacity: 0;
+}
+
+.related-wrapper:hover .content.fade {
+  opacity: 1;
+}
+
+.related-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.related-wrapper-price {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  margin: 0.5rem auto;
+  text-align: center;
+  font-weight: bold;
+}

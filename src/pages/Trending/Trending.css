@@ -1,0 +1,22 @@
+/* Trending */
+.img-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.img-wrapper button {
+  border: none;
+  outline: none;
+}
+
+.img-wrapper-price {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  margin: 0.5rem auto;
+  text-align: center;
+  font-weight: bold;
+}

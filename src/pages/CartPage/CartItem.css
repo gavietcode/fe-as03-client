@@ -1,0 +1,27 @@
+.cart-item {
+  display: grid;
+  grid-template-columns: repeat(6, 0.16fr);
+  align-items: center;
+}
+
+.cart-item .cart-image img {
+  width: 20%;
+}
+
+.cart-item .cart-amount {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.cart-item .cart-delete button {
+  font-size: 16px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* cart-total */
+.item-container {
+  display: grid;
+  grid-template-columns: 80% 20%;
+}

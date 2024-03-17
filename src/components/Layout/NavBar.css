@@ -1,0 +1,65 @@
+nav {
+  max-width: 88%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4rem auto;
+}
+
+nav .nav-btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+nav .nav-btn .nav-btn-wh {
+  color: brown;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+nav .nav-btn .nav-btn-wsh {
+  margin-left: 0.4rem;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav .nav-user,
+nav .nav-user .nav-user-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .nav-user .nav-user-login {
+  margin-left: 1rem;
+}
+
+nav .nav-user button {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+nav .nav-user .nav-user-cart {
+  position: relative;
+}
+
+nav .nav-user .nav-user-cart .nav-user-amount {
+  position: absolute;
+  top: -14px;
+  right: -1px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  color: red;
+}
+
+nav .nav-user .nav-user-cart span {
+  margin-left: 0.3rem;
+  margin-right: 1rem;
+}
