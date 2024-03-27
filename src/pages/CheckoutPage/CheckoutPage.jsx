@@ -2,14 +2,55 @@ import "./CheckoutPage.css";
 import FormatPrice from "../../components/FormatPrice/FormatPrice";
 import { NavLink } from "react-router-dom";
 import { getCartTotal } from "../../store/cartSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../store/userSlice";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data: cartProducts, totalAmount } = useSelector(
     (state) => state.cart
   );
+  const [info, setInfo] = useState({});
+
+  let user = useSelector(selectUser) || "[]";
+
+  const handleChange = (e) => {
+    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token ? token : ""}`);
+
+    const raw = JSON.stringify({
+      user: user,
+      products: cartProducts,
+      totalPrice: totalAmount,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/orders/create", requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+    alert("Order placed successfully!");
+    navigate("/");
+  };
 
   useEffect(() => {
     dispatch(getCartTotal());
@@ -25,42 +66,55 @@ const CheckoutPage = () => {
         <div className="check-detail">
           <div className="check-inputs">
             <div className="check-input">
-              <label htmlFor="">FULL NAME</label>
+              <label>FULL NAME</label>
               <input
                 type="text"
-                name="name"
+                id="fullname"
                 placeholder="Enter Your Full Name"
+                defaultValue={user?.fullname}
+                onChange={handleChange}
               />
             </div>
             <div className="check-input">
-              <label htmlFor="">EMAIL</label>
-              <input type="email" name="email" placeholder="Enter Your Email" />
-            </div>
-            <div className="check-input">
-              <label htmlFor="">PHONE NUMBER</label>
+              <label>EMAIL</label>
               <input
-                type="number"
-                name="phone"
-                placeholder="Enter Your Phone"
+                type="email"
+                id="email"
+                placeholder="Enter Your Email"
+                defaultValue={user?.email}
+                onChange={handleChange}
               />
             </div>
             <div className="check-input">
-              <label htmlFor="">FULL NAME</label>
+              <label>PHONE NUMBER</label>
               <input
                 type="text"
-                name="address"
+                id="phone"
+                placeholder="Enter Your Phone"
+                defaultValue={user?.phone}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="check-input">
+              <label>Your Address</label>
+              <input
+                type="text"
+                id="address"
                 placeholder="Enter Your Address"
+                defaultValue={user?.address}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="check-input">
               <NavLink to="/">
-                <button
-                  onClick={() => {
-                    return alert("Checkout success!, go back home!");
-                  }}
-                >
-                  Place order
-                </button>
+                {user.email === "" ||
+                user.email === undefined ||
+                user.email === null ? (
+                  alert("You need to login!.")
+                ) : (
+                  <button onClick={handleClick}>Place order</button>
+                )}
               </NavLink>
             </div>
           </div>

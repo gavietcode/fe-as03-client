@@ -1,66 +1,41 @@
-import { useRef } from "react";
+import { useState } from "react";
 import "./LoginPage.css";
 import { Link, useNavigate } from "react-router-dom";
-import { isEmpty, checkEmail, correctPassword } from "./validate";
-import axios from "axios";
 
-const backImg = "images/banner1.jpg";
+const backImg = "./images/banner1.jpg";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const useArr = JSON.parse(localStorage.getItem("useArr"))
-    ? JSON.parse(localStorage.getItem("useArr"))
-    : [];
+  const [info, setInfo] = useState({});
 
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const phoneRef = useRef();
+  const handleChange = (e) => {
+    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const enteredName = nameRef.current.value;
-    const enteredEmail = emailRef.current.value;
-    const enteredPassword = passwordRef.current.value;
-    const enteredPhone = phoneRef.current.value;
 
-    const nameIsValid = !isEmpty(enteredName);
-    const emailIsValid =
-      checkEmail(enteredEmail, useArr).length === 0 && !isEmpty(enteredEmail);
-    const passwordIsValid = correctPassword(enteredPassword);
-    const phoneIsValid = !isEmpty(enteredPhone);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-    const IsValid =
-      nameIsValid && emailIsValid && passwordIsValid && phoneIsValid;
+    const raw = JSON.stringify({ ...info });
 
-    if (!IsValid) {
-      return alert("Check your mail, password");
-    } else {
-      try {
-        // Add User
-        useArr.push({
-          fullname: enteredName,
-          email: enteredEmail,
-          password: enteredPassword,
-          phone: enteredPhone,
-          address: "",
-          logged: true,
-        });
-        const newUser = {
-          ...useArr,
-        };
-        console.log("newUser", newUser);
-        await axios.post("/auth/register", newUser);
-      } catch (err) {
-        console.log(err);
-      }
-      // Lưu vào Local Storage
-      localStorage.setItem("useArr", JSON.stringify(useArr));
-      alert("You have successfully registered. Please login and enjoy!!");
-      navigate("/login");
-      window.location.reload();
-    }
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/auth/register", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        alert("You are  registered successfully!");
+        navigate("/login");
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -71,42 +46,42 @@ const RegisterPage = () => {
             <img src={backImg} alt="backImg" />
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form className="login-form">
           <p>SIGN UP</p>
-          <label htmlFor="">Full Name</label>
+          <label>Full Name</label>
           <input
             type="text"
-            name="name"
-            ref={nameRef}
-            required
+            id="fullname"
             placeholder="Full Name"
+            onChange={handleChange}
+            required
           />
-          <label htmlFor="">Email</label>
+          <label>Email</label>
           <input
             type="email"
-            name="email"
-            ref={emailRef}
-            required
+            id="email"
             placeholder="Email"
+            onChange={handleChange}
+            required
           />
-          <label htmlFor="">Password</label>
+          <label>Password</label>
           <input
             type="password"
-            name="password"
-            ref={passwordRef}
-            required
+            id="password"
             placeholder="Password"
-          />
-          <label htmlFor="">Phone</label>
-          <input
-            type="number"
-            name="phone"
-            ref={phoneRef}
+            onChange={handleChange}
             required
+          />
+          <label>Phone</label>
+          <input
+            type="text"
+            id="phone"
             placeholder="Phone"
+            onChange={handleChange}
+            required
           />
           <div className="login-btn">
-            <button type="submit">SIGN UP</button>
+            <button onClick={handleSubmit}>SIGN UP</button>
           </div>
           <div className="login-link">
             <span>Login? </span>

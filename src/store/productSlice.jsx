@@ -28,8 +28,6 @@ export const fetChProducts = () => {
       const response = await fetch(`${BASE_URL}`);
       const data = await response.json();
 
-      console.log("Data: ", data);
-
       dispatch(setProducts(data));
       dispatch(setStatus(STATUS.IDLE));
     } catch (error) {

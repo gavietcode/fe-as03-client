@@ -1,0 +1,19 @@
+.chat {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  width: 26rem;
+  height: 40rem;
+  /* display: flex;
+  flex-direction: column; */
+  position: fixed;
+  right: 6rem;
+  bottom: 6rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.right-side-chat {
+  margin-left: 3rem;
+  width: 50%;
+}

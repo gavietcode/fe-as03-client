@@ -1,0 +1,11 @@
+h2 {
+  margin: 1rem 10rem;
+}
+.orders {
+  display: flex;
+  justify-content: center;
+}
+th,
+td {
+  border: 2px solid blueviolet;
+}

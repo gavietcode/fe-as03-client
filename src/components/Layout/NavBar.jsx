@@ -12,13 +12,14 @@ const NavBar = () => {
   let { totalItems } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
-  // const user = useSelector(selectUser);
-  const user = JSON.parse(localStorage.getItem("loggedIn") || "[]");
+  let user = useSelector(selectUser) || "[]";
+  // const user = JSON.parse(localStorage.getItem("loggedIn") || "[]");
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(clearCart());
-    localStorage.removeItem("loggedIn");
+    // dispatch(clearCart());
+    localStorage.removeItem("token");
+    navigate("/login", { replace: true });
   };
 
   useEffect(() => {
@@ -45,16 +46,28 @@ const NavBar = () => {
               <span>Cart</span>
             </Link>
           </button>
-          {!user.logged ? (
+          {user.email === "" ||
+          user.email === undefined ||
+          user.email === null ? (
             <Link to="/login">
               <button type="button" className="nav-user-login">
                 <CiUser /> Login
               </button>
             </Link>
           ) : (
-            <button type="button" onClick={handleLogout}>
-              <CiUser /> {user.name} Logout
-            </button>
+            <div>
+              <span>
+                <CiUser /> {user.fullname}
+              </span>
+              <Link to="/orders">
+                <span style={{ cursor: "pointer", color: "blueviolet" }}>
+                  Your Orders
+                </span>
+              </Link>
+              <button type="button" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
           )}
         </div>
       </nav>

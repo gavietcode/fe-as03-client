@@ -9,6 +9,9 @@ import Detail from "./pages/DetailPage/DetailPage";
 import Checkout from "./pages/CheckoutPage/CheckoutPage";
 import Login from "./Users/LoginPage";
 import Register from "./Users/RegisterPage";
+import Orders from "./pages/Orders/Orders";
+import Order from "./pages/Order/Order";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/getorderbyid/:id" element={<Order />} />
+            <Route path="/chat" element={<Chat />} />
           </Route>
         </Routes>
       </BrowserRouter>

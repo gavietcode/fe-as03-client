@@ -1,19 +1,11 @@
-import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/userSlice";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
-
-import "./Chatbox.css";
-
-// import InputChat from "../InputChat/InputChat";
-import Conversation from "../Conversation/Conversation";
+import React, { useEffect, useRef, useState } from "react";
+import "./chat.css";
 import { userChats } from "../../api/ChatRequest";
-import BoxChat from "../boxchat/BoxChat";
-
-const Chatbox = (props) => {
-  let user = useSelector(selectUser) || "[]";
-
+import Conversation from "../../components/Conversation/Conversation";
+import BoxChat from "../../components/boxchat/BoxChat";
+import { io } from "socket.io-client";
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+const Chat = () => {
   const socket = useRef();
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -63,23 +55,10 @@ const Chatbox = (props) => {
     return online ? true : false;
   };
 
-  const clickHideHandle = () => {
-    props.clickHideHandle();
-  };
-
   return (
-    <section className="chatbox">
-      <div className="chat_title">
-        <h4>Support</h4>
-        <div className="title_right">
-          <button className="btn_show">Chat App</button>
-          <button className="btn-chat" onClick={clickHideHandle}>
-            x
-          </button>
-        </div>
-      </div>
-
-      <div className="chat_content">
+    <div className="chat">
+      {/* Left Side */}
+      <div className="feft-side-chat">
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
@@ -100,7 +79,10 @@ const Chatbox = (props) => {
           </div>
         </div>
       </div>
-      <div className="chat_form">
+
+      {/* Right Side */}
+
+      <div className="right-side-chat">
         <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
         <BoxChat
           chat={currentChat}
@@ -109,8 +91,8 @@ const Chatbox = (props) => {
           receivedMessage={receivedMessage}
         />
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Chatbox;
+export default Chat;

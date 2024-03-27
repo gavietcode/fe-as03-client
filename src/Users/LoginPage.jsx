@@ -1,46 +1,63 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./LoginPage.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkEmail, isEmpty } from "./validate";
 import { login } from "../store/userSlice";
+import axios from "axios";
+import useFetch from "../hooks/useFetch";
 
-login;
-
-const backImg = "images/banner1.jpg";
-
-let allUsers = JSON.parse(localStorage.getItem("useArr"));
+const backImg = "./images/banner1.jpg";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({
+    username: undefined,
+    password: undefined,
+  });
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const { data } = useFetch("http://localhost:5000/api/users");
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const enteredEmail = emailRef.current.value;
-    const enteredPassword = passwordRef.current.value;
-    const userEmail = checkEmail(enteredEmail, allUsers);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-    if (userEmail) {
-      if (!isEmpty(enteredEmail)) {
-        if (userEmail.length === 0) {
-          alert("You don't have a count. Please Register");
-          navigate("/register");
-        } else if (userEmail[0].password !== enteredPassword) {
-          passwordRef.current.value = "";
-        } else {
-          dispatch(login(userEmail[0]));
-          localStorage.setItem("loggedIn", JSON.stringify(userEmail[0]));
-          navigate("/", { state: true });
-        }
-      } else {
-        alert("Please input valid email!");
-      }
-    }
+    const raw = JSON.stringify({
+      ...credentials,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/auth/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const { userId, token, role } = result;
+        JSON.stringify(localStorage.setItem("token", token));
+        const findUser = data.filter((item) => {
+          if (item._id === userId) {
+            return item;
+          }
+        });
+
+        dispatch(login(findUser[0]));
+        alert(role + " logged in!");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -54,21 +71,21 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit} className="login-form">
           <p>SIGN UP</p>
-          <label htmlFor="">Email</label>
+          <label>Email</label>
           <input
             type="email"
-            name="email"
-            ref={emailRef}
-            required
+            id="email"
             placeholder="Email"
+            onChange={handleChange}
+            required
           />
-          <label htmlFor="">Password</label>
+          <label>Password</label>
           <input
             type="password"
-            name="password"
-            ref={passwordRef}
-            required
+            id="password"
             placeholder="Password"
+            onChange={handleChange}
+            required
           />
 
           <div className="login-btn">

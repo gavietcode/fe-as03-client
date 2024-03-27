@@ -1,6 +1,6 @@
 .chatbox {
-  width: 26rem;
-  height: 30rem;
+  width: 36rem;
+  height: 40rem;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -28,7 +28,6 @@
 
 .chat_content {
   height: 500px;
-  overflow-y: scroll;
   text-align: right;
 }
 
@@ -89,4 +88,10 @@
 .emotion {
   font-size: 1.5rem;
   color: #adb5bd;
+}
+
+.chat_form {
+  position: absolute;
+  top: 5rem;
+  right: 15rem;
 }
